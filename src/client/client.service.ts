@@ -4,14 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomBytes, scrypt as _scrpyt } from 'crypto';
 import { Repository } from 'typeorm';
 import { CreateClientDto } from './dto/create-client.dto';
-import { promisify } from 'util';
-
+import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { Client } from './entities/client.entity';
 import { JwtService } from '@nestjs/jwt';
-const scrypt = promisify(_scrpyt);
+import { passwordEncryption } from 'src/utiles/password.encryption';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class ClientService {
@@ -22,15 +21,7 @@ export class ClientService {
   async create(createClientDto: CreateClientDto) {
     const client = this.repo.create(createClientDto);
 
-    const salt = randomBytes(8).toString('hex'); // => 16 characters long
-
-    // Hash the salt and the password together
-    const hash = (await scrypt(client.password, salt, 32)) as Buffer;
-
-    // Join the hased result and the salt together
-    const result = salt + '.' + hash.toString('hex');
-
-    client.password = result;
+    client.password = await passwordEncryption.encryption(client.password);
 
     client.accessKey =
       randomBytes(24).toString('hex') +
@@ -49,10 +40,7 @@ export class ClientService {
     if (!client) {
       throw new NotFoundException('user not found!');
     }
-    const [salt, storedhash] = client.password.split('.');
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-    if (storedhash !== hash.toString('hex')) {
+    if (!(await passwordEncryption.validation(password, client))) {
       throw new BadRequestException('bad password');
     }
 
@@ -70,6 +58,9 @@ export class ClientService {
     return access_token;
   }
   async put(updateClientDto, id) {
+    for (const user of updateClientDto.setting.Managers) {
+      user.password = await passwordEncryption.encryption(user.password);
+    }
     const result = await this.repo.update(id, updateClientDto);
 
     return result.affected;
@@ -86,7 +77,10 @@ export class ClientService {
       'Authorization'
     ];
     for (const manager of Managers) {
-      if (manager.id == params.id && manager.password == params.password) {
+      if (
+        manager.id == params.id &&
+        (await passwordEncryption.validation(params.password, manager))
+      ) {
         const features = Object.keys(Authorization);
         const allow = [];
         features.map(async (value) => {
@@ -108,5 +102,39 @@ export class ClientService {
       }
     }
     throw new NotFoundException('user not found || wrong password');
+  }
+  async findByKey(accessKey: string) {
+    console.log(accessKey);
+    return await this.repo.findOne({
+      where: { accessKey: accessKey },
+    });
+  }
+  async ga4() {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const credentials = require('../../ga4-feature-test-a537eaf9bae5.json');
+
+    const test = new BetaAnalyticsDataClient({
+      credentials: credentials,
+    });
+    const report = await test.runReport({
+      property: 'properties/326007266',
+      dateRanges: [
+        {
+          startDate: '2022-03-31',
+          endDate: 'today',
+        },
+      ],
+      dimensions: [
+        {
+          name: 'city',
+        },
+      ],
+      metrics: [
+        {
+          name: 'activeUsers',
+        },
+      ],
+    });
+    return report;
   }
 }

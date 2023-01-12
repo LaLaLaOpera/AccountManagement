@@ -18,9 +18,17 @@ export class AccountController {
   @Post()
   create(
     @Body() createAccountDto: CreateAccountDto,
-    @Query() accessKey: string,
+    @Query('accessKey') accessKey: string,
   ) {
     return this.accountService.create(createAccountDto, accessKey);
+  }
+
+  @Post()
+  signup(
+    @Body() createAccountDto: CreateAccountDto,
+    @Query('accessKey') accessKey: string,
+  ) {
+    return this.accountService.signUp(createAccountDto, accessKey);
   }
 
   @Get()

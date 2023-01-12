@@ -1,7 +1,11 @@
+import { Client } from 'src/client/entities/client.entity';
+
 export class CreateAccountDto {
   email: string;
 
   password: string;
 
-  custom: JSON;
+  custom: string;
+
+  client: Client;
 }

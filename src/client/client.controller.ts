@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Param, Put, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Put,
+  Req,
+  Get,
+  Query,
+} from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -33,5 +42,9 @@ export class ClientController {
     }
     console.log('so far?');
     return this.clientService.put(updateClientDto, id);
+  }
+  @Get('/report/:id')
+  ga4test(@Param('id') id: string) {
+    return this.clientService.ga4();
   }
 }

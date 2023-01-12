@@ -9,7 +9,7 @@ import { ClientModule } from './client/client.module';
 import { Client } from './client/entities/client.entity';
 import { JwtMiddleware } from './middleware/jwt.middleware';
 import { AccessKeyMiddleware } from './middleware/accesskey.middleware';
-
+import { ActivityModule } from './activity/activity.module';
 @Module({
   imports: [
     JwtModule.register({
@@ -28,6 +28,7 @@ import { AccessKeyMiddleware } from './middleware/accesskey.middleware';
     }),
     ClientModule,
     AccountModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

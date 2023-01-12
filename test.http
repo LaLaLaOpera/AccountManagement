@@ -53,7 +53,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkI
 }
 
 ### Account
-GET http://localhost:3000/api?accessKey=5079ab5c65ed920ef71b3a9f4b428efc4d68de9a49b8aff4test636bd875994d592b304960c103f9702576dc51284c269e7a
+POST http://localhost:3000/api?accessKey=5079ab5c65ed920ef71b3a9f4b428efc4d68de9a49b8aff4test636bd875994d592b304960c103f9702576dc51284c269e7a
 Content-Type: application/json
+
+{
+    "email" : "lalala@test.com",
+    "password" : "sample",
+    "custom" : {
+        "sample" : "do what I want",
+        "information" : "this is for test"
+    }
+}
+
+### TEST
+GET http://localhost:3000/client/report/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoibXJBQkMiLCJyb2xlIjoiTWFuYWdlciIsImFsbG93IjpbInRlc3RGZWF0dXJlIiwidGVzdEZlYXR1cmUyIl19LCJpYXQiOjE2NzM0MzA0MDh9.i7Ti3obCigqO-2jJA6FKSm0uagqv6z-uHIf5H6dtbH4
 
 {}

@@ -15,9 +15,14 @@ export class Account extends Base {
   password: string;
 
   @Column({
+    comment: '생년월일',
+  })
+  birthday: string;
+
+  @Column({
     type: 'simple-json',
   })
-  custome: string;
+  custom: string;
 
   @ManyToOne(() => Client, (client) => client.accounts)
   client: Client;
