@@ -1,0 +1,91 @@
+### test
+POST http://localhost:3000/client/signin
+Content-Type: application/json
+
+{   
+    "email" : "test@test.com",
+    "password" : "123123"
+}
+
+### SIGN UP
+POST http://localhost:3000/client/signup
+Content-Type: application/json
+
+{   
+    "email" : "test@test.com",
+    "password" : "123123"
+}
+
+
+
+### block
+PUT http://localhost:3000/client/6bdbce5f-eef1-456d-9f4c-0b101dc51919
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNmJkYmNlNWYtZWVmMS00NTZkLTlmNGMtMGIxMDFkYzUxOTE5Iiwicm9sZSI6IlJvb3QifSwiaWF0IjoxNjc4NDMzNjU1fQ.B_v1la3edAOchjT4kWZATxXU4FKQf3X7g5Huaxp-3dU
+
+
+{
+    "setting" : {
+        "Managers" : [
+            {
+            "id" : "mrABC",
+            "password" : "123123"
+            }
+        ],
+        "Authorization" : {
+            "testFeature" : ["mrABC"],
+            "testFeature2" : ["mrABC"]
+        }
+    }
+}
+
+
+### test
+
+POST http://localhost:3000/client/6bdbce5f-eef1-456d-9f4c-0b101dc51919/subsignin
+Content-Type: application/json
+
+{   
+    "id" : "mrABC",
+    "password" : "123123"
+}
+
+
+### block
+
+GET http://localhost:3000/client
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoibXJBQkMiLCJyb2xlIjoiTWFuYWdlciIsImFsbG93IjpbInRlc3RGZWF0dXJlIiwidGVzdEZlYXR1cmUyIl19LCJpYXQiOjE2NzM0MzA0MDh9.i7Ti3obCigqO-2jJA6FKSm0uagqv6z-uHIf5H6dtbH4
+
+{
+
+}
+
+### Account
+POST http://localhost:3000/api/signUp?accessKey=4af6883fed7969158485d02dad7e5b5e230f1a2bab09f7fbtest0026a177760379b2720378d326d538dc83bc4022bc4de799
+Content-Type: application/json
+
+{
+    "email" : "lalala@test.com",
+    "password" : "sample",
+    "birthday" : "2000-10-12",
+    "custom" : {
+        "sample" : "do what I want",
+        "information" : "this is for test"
+    }
+}
+
+### SignIn
+POST http://localhost:3000/api/signIn?accessKey=5079ab5c65ed920ef71b3a9f4b428efc4d68de9a49b8aff4test636bd875994d592b304960c103f9702576dc51284c269e7a
+Content-Type: application/json
+
+{
+    "email" : "lalala@test.com",
+    "password" : "sample"
+}
+### TEST
+GET http://localhost:3000/client/report/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoibXJBQkMiLCJyb2xlIjoiTWFuYWdlciIsImFsbG93IjpbInRlc3RGZWF0dXJlIiwidGVzdEZlYXR1cmUyIl19LCJpYXQiOjE2NzM0MzA0MDh9.i7Ti3obCigqO-2jJA6FKSm0uagqv6z-uHIf5H6dtbH4
+
+{}
