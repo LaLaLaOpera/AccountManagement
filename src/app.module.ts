@@ -20,7 +20,7 @@ import { FormModule } from './form/form.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,	
+      port: 5432,
       username: 'dev01',
       password: '1234',
       database: 'dev01',

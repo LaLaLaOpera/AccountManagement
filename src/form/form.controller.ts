@@ -6,10 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-Req
+  Req,
 } from '@nestjs/common';
 import { FormService } from './form.service';
-import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 
 @Controller('form')
@@ -17,9 +16,8 @@ export class FormController {
   constructor(private readonly formService: FormService) {}
 
   @Post()
-  create(@Body() any, @Req() req) {
+  create(@Body() any) {
     console.log(any);
-	console.log(req);
   }
 
   @Get()
